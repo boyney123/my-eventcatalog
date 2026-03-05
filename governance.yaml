@@ -1,0 +1,20 @@
+rules:
+  # This rule is used to notify when a consumer is added or removed from the OrdersService
+  - name: orders-service-consumer-changes
+    when:
+      - consumer_added
+      - consumer_removed
+    resources:
+      - produces:OrdersService
+    actions:
+      - type: webhook
+        url: https://webhook.site/fb6b000c-36e1-4dfb-b3c1-0c1ff8e3f4bb
+  - name: inventory-service-upstream-removed
+    when:
+      - producer_removed
+    resources:
+      - consumes:InventoryService
+    actions:
+      - type: console
+      - type: webhook
+        url: https://webhook.site/fb6b000c-36e1-4dfb-b3c1-0c1ff8e3f4bb

@@ -1,0 +1,24 @@
+name: EventCatalog Governance
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  governance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+      - run: git fetch origin main:main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: |
+          npx @eventcatalog/cli governance check \
+            --base main \
+            --target ${{ github.head_ref }} \
+            --status proposed
+        env:
+          EVENTCATALOG_SCALE_LICENSE_KEY: ${{ secrets.EVENTCATALOG_SCALE_LICENSE_KEY }}
