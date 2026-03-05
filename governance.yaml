@@ -17,4 +17,4 @@ rules:
     actions:
       - type: console
       - type: webhook
-        url: $PAGERDUTY_WEBHOOK_URL
+        url: https://webhook.site/fb6b000c-36e1-4dfb-b3c1-0c1ff8e3f4bb
